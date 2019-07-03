@@ -40,3 +40,43 @@ select * from emp where hiredate between '87/01/01' and '87/12/31';
 select * from emp where comm in (300, 500, 1400);
 
 -- 4. like, 와일드카드%,  와일드카드_, not like;
+-- like : 문자 패턴 검색 연산자 키워드 
+-- 패턴: %, _ : 자리수 고려할때는 '_'를, 아닐때는 '%'를 쓰면 좋을듯!
+
+-- '% 패턴' 이용 
+-- 사원 테이블에서 'S'로 시작하는 사원의 이름을 검색 
+select * from emp where ename like 'S%';
+-- 결과: SMITH, SCOTT (*** 주의: 데이터는 대소문자를 구별함);
+
+-- 사원들 중, 이름에 'A'를 포함하는 사원들의 목록
+select * from emp where ename like '%A%';
+
+-- 사원들 중, 입사년도가 1981년인 사원들의 목록 
+select * from emp where hiredate like '81%';
+
+-- '_패턴' 이용 : 문자의 자리(위치) 고정을 의미: 해당 자리에는 어떠한 값이 와도 무관! 
+-- _A : 앞자리 문자는 어떠한 문자여도 무관, 두번째 문자는 반드시 A 
+-- 사원의 이름중에 두번째 문자에 'A'를 포함하는 이름의 사원 + 뒤에는 아무 문자가 와도 상관없음
+select * from emp where ename like '_A%';
+-- select * from emp where ename like '_A'; : 총 자리수 2글자, 두번째 글자는 A
+
+-- not like 연산자 
+-- 사원의 이름중 문자 'A'를 포함하지 않는 사원들 리스트 
+select * from emp where ename not like '%A%';
+
+
+-- 5. null 값 연산 
+-- 5-1. IS NULL 
+-- 커미션이 없는 사원들의 리스트를 출력하고자 할때 
+select * from emp where comm=null;
+-- 결과: 아무것도 없음 --> null은 = 연산이 불가
+
+select * from emp where comm is null or comm=0;
+-- null: 커미션이 입력되지 않은 것, 
+-- 0: 커미션을 받지 않는 것
+
+-- 커미션을 받는 사원들의 리스트 
+select * from emp where comm is not null and comm >0;
+select * from emp where not (comm is null or comm=0);
+
+
