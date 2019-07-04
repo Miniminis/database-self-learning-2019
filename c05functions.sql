@@ -5,7 +5,15 @@ desc dual;
 select * from dual;
 -- 결과: row X 출력
 
--- 2. 숫자 함수  
+-- 2. 숫자 함수
+select * from emp;
+
+--floor() : 소수점 아래 버림
+select floor(empno/2) from emp;
+
+--round(): 특정 자릿수에서 반올림 
+select round(empno/2, 0) from emp;
+
 -- 3. 문자처리함수 
 -- 4. 날짜함수
 -- 5. 형변환 함수: TO_NUMBER, TO_CHAR, TO_DATE

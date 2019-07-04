@@ -69,26 +69,38 @@ select bookname from book where bookid=1;
 select bookname from book where price>=20000;
 
 --(3) 박지성의 총 구매액(박지성의고객번호는1번으로놓고작성)
+-- join 미사용 
 select sum(saleprice) as TotalPrice from orders where custid=1;
 
+-- join 사용 
+select sum(saleprice) 총구매액 from orders, customer 
+where orders.custid = customer.custid 
+and name='박지성';
+
 --(4) 박지성이구매한도서의수(박지성의고객번호는1번으로놓고작성)
-select count(bookid) from orders where custid=1;
+select count(*) from orders where custid=1;
+
+select count(*) from orders, customer 
+where orders.custid = customer.custid
+and name='박지성';
 
 --2 마당서점의운영자와경영자가요구하는다음질문에대해SQL 문을작성하시오.
 --(1) 마당서점 도서의 총 개수 
-select count(bookid) from book;
+select count(*) from book;
 
 --(2) 마당서점에 도서를 출고하는 출판사의 개수 
 select distinct publisher from book;
 
---(3) 모든고객의이름, 주소
-select name, address from customer;
+--(3) 모든고객의이름, 주소, 전화번호
+select name, address, nvl(phone, '미등록') from customer;
 
 --(4) 2014년7월4일~7월7일사이에주문받은도서의주문번호
-select orderid from orders where orderdate between '14/07/04' and '14/07/07';
+select orderid from orders 
+where orderdate between '14/07/04' and '14/07/07';
 
 --(5) 2014년7월4일~7월7일사이에주문받은도서를제외한도서의주문번호
-select orderid from orders where not (orderdate between '14/07/04' and '14/07/07');
+select orderid from orders 
+where not (orderdate between '14/07/04' and '14/07/07');
 
 --(6) 성이‘김’씨인고객의이름과주소
 select name, address from customer where name like '김%';
