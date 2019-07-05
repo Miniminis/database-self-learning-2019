@@ -2,14 +2,16 @@
 select * from emp;
 
 --16. SUBSTR 함수를 사용하여 사원들의 입사한 년도와 입사한 달만 출력하시오.
--- substr(대상문자, '자를 시작점', '자리수')
+-- substr(대상문자, '자리위치', '문자의 개수')
 select substr(hiredate, '0', '5') from emp;
+select substr(hiredate, '1', '5') from emp;
 
 --17. SUBSTR 함수를 사용하여 4월에 입사한 사원을 출력하시오.
 select ename from emp where substr(hiredate, '4', '2')='04';
+select * from emp where substr(hiredate, '4', '2')='04';
 
 --18. MOD 함수를 사용하여 사원번호가 짝수인 사람만 출력하시오.
--- MOD(대상숫자, 나눌수) = 나머지 값 출력
+-- MOD(대상컬럼, 나눌수) = 나머지 값 출력
 select ename from emp where mod(empno, 2)=0;
 
 --19. 입사일을 년도는 2자리(YY), 월은 숫자(MON)로 표시하고 요일은 약어 (DY)로 지정하여 출력하시오.
@@ -63,13 +65,12 @@ select job, count(*) totalempnum from emp group by job;
 select count(distinct mgr) numofmgr from emp;
 
 --27. 급여 최고액, 급여 최저액의 차액을 출력하시오.
-select max(sal)-min(sal) as salGap from emp;
+select max(sal), min(sal), max(sal)-min(sal) as salGap from emp;
 
 --28. 직급별 사원의 최저 급여를 출력하시오. 
 -- 관리자를 알 수 없는 사원 제외
 -- 최저 급여가 2000 미만인 그룹은 제외시키고 
 -- 결과를 급여에 대한 내림차순으로 정렬하여 출력하시오.
-select * from emp;
 select job, min(sal) from emp 
 where mgr is not null
 group by job
@@ -94,6 +95,12 @@ from emp, dept
 where emp.deptno = dept.deptno
 group by emp.deptno, dname, loc
 order by emp.deptno;
+
+select deptno, dname, loc, count(ename), round(avg(sal))
+from emp e right outer join dept d 
+using (deptno)
+group by deptno, dname, loc
+order by deptno; 
 
 ------ join 미사용 
 select deptno,
@@ -121,11 +128,7 @@ order by deptno;
 
 -- group by 복수 개의 컬럼 : 각 컬럼의 조건을 충족하는 것이 하나의 그룹!
 -- group by 컬럼1, 컬럼2: 컬럼 1과 컬럼2를 모두 만족할 때 하나의 그룹 생성
-
----------join 사용 
-
-
----------join 미 사용 
+ 
 select job, deptno dno, 
 decode(deptno, 10, sum(sal)) 부서10,
 decode(deptno, 20, sum(sal)) 부서20,
@@ -133,4 +136,4 @@ decode(deptno, 30, sum(sal)) 부서30,
 sum(sal)총액
 from emp
 group by job, deptno
-order by dno asc, job asc; 
+order by dno, job; 
