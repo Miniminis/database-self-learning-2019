@@ -33,11 +33,13 @@ order by sal;
 
 -- 2-2. All 연산자 : 모든 결과값과 값이 일치하면 참 
 --      >All: 서브쿼리의 최댓값보다 크면 참 
-select ename, sal from emp where sal> all (select sal from emp where deptno=30);
+select ename, sal from emp 
+where sal> all (select sal from emp where deptno=30);
 
 -- 2-3. Any 연산자: 하나라도 일치하면 참 
 --      >Any: 서브쿼리의 최솟값보다 크면 참 
-select ename, sal from emp where sal >any (select sal from emp where deptno=30);
+select ename, sal from emp 
+where sal >any (select sal from emp where deptno=30);
 
 -- 3. 부속질의 
 -- 3-1. 인라인 뷰 : from 절 뒤에 서브쿼리가 위치 - 결과값이 테이블 형태! 
