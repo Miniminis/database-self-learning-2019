@@ -49,8 +49,6 @@ where abs(price-saleprice)>= all(
     from (select * from orders o, customer c, book b where o.custid=c.custid and o.bookid = b.bookid));
 
 --(13) 도서의판매액평균보다자신의구매액평균이더높은고객의이름
---select * from orders o, customer c, book b where o.custid=c.custid and o.bookid = b.bookid;
---select name, avg(saleprice) from orders o, customer c where o.custid=c.custid group by name;
 
 select name 
 from customer c join orders o 
@@ -68,14 +66,24 @@ and publisher in (
     where custid = (select custid from customer where name='박지성'))
 and name != '박지성';
 
---(2) 두 개 이상의 서로 다른 출판사에서 도서를 구매한 고객의 이름
+--(2)***** 두 개 이상의 서로 다른 출판사에서 도서를 구매한 고객의 이름
 select name from orders o, customer c, book b where o.custid=c.custid and o.bookid = b.bookid
 group by name
 having count(distinct publisher)>=2;
 
---4 다음질의에대해DML 문을작성하시오.
---(1) 새로운도서(‘스포츠세계’, ‘대한미디어’, 10000원)이마당서점에입고되었다.
+-- 4 다음질의에대해DML 문을작성하시오.
+-- (1) 새로운도서(‘스포츠세계’, ‘대한미디어’, 10000원)이마당서점에입고되었다.
 --    삽입이안될경우필요한데이터가더있는지찾아보자.
---(2) ‘삼성당’에서출판한도서를삭제해야한다.
---(3) ‘이상미디어’에서출판한도서를삭제해야한다. 삭제가안될경우원인을생각해보자.
---(4) 출판사‘대한미디어’가‘대한출판사’로이름을바꾸었다.
+insert into book values(‘스포츠세계’, ‘대한미디어’, 10000);
+-- bookid 는 primary key로 설정되어있어서 null 값이 허용되지 않음 
+
+-- (2) ‘삼성당’에서출판한도서를삭제해야한다.
+delete from book where publisher = '삼성당';
+-- 삼성당은 order table 에서 외래키를 통해 참조하는 값 X
+
+-- (3) ‘이상미디어’에서출판한도서를삭제해야한다. 삭제가안될경우원인을생각해보자. 
+delete from book where publisher = '이상미디어';
+-- 이상미디어의 경우는 order table 에서 bookid 외래키를 통해 book table 을 참조하고 있으므로 삭제할 수 없음
+
+-- (4) 출판사‘대한미디어’가‘대한출판사’로이름을바꾸었다.
+update book set publisher='대한출판사' where publisher='대한미디어';
