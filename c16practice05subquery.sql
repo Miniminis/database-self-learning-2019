@@ -44,7 +44,8 @@ order by deptno;
 
 -- 48. 담당업무가 ANALYST 인 사원보다 급여가 적으면서 업무가 ANALYST가 아닌 사원들을 표시(사원번호, 이름, 담당 업무, 급여)하시오.
 select empno, ename, job, sal from emp where sal < (select distinct sal from emp where job='ANALYST') and job != 'ANALYST';
-
+update emp set sal=3000 where ename='SCOTT';
+select * from emp;
 -- 49. 부하직원이 없는 사원의 이름을 표시하시오.
 -- where exists 
 -- where not exists
@@ -80,7 +81,10 @@ select empno, ename, job from emp where deptno = (select deptno from dept where 
 select empno, ename, sal 
 from emp 
 where deptno = (select deptno from emp where sal> (select avg(sal) from emp) and ename like '%M%');
--- 결과값 없음 
+-- 결과값 없음
+
+-- 수정
+select empno, ename, sal from emp where sal> (select avg(sal) from emp) and (deptno in (select deptno from emp where ename like '%M%'));
 
 -- 58. 평균급여가 가장 적은 업무를 찾으시오.
 select job, avg(sal) from emp group by job having avg(sal) <= all(select avg(sal) from emp group by job);
