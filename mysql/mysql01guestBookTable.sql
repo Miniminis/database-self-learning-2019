@@ -1,4 +1,4 @@
--- 2019.07.11 GUESTBOOK DDL
+-- GUESTBOOK DDL
 -- 게시물 정보를 저장할 테이블 생성 
 CREATE TABLE GUESTBOOK_MESSAGE (
     MESSAGE_ID int(6) PRIMARY KEY auto_increment,
@@ -24,3 +24,4 @@ INSERT INTO GUESTBOOK_MESSAGE (GUEST_NAME, PASSWORD, MESSAGE) values ("77","7777
 -- limit 시작점, 출력개수
 select * from testdb.guestbook_message order by message_id desc limit 0, 3;
 select * from testdb.guestbook_message order by message_id desc limit ?, ?;
+
