@@ -8,7 +8,7 @@ create table memberinfo (
     username varchar(20) not null,
     userphoto varchar(30), 
     regdate datetime default CURRENT_TIMESTAMP,
-    PRIMARY KEY (idx)
+    guestbook_message PRIMARY KEY (idx)
 );
 
 -- 테이블 데이터 확인 
@@ -16,3 +16,4 @@ desc memberinfo;
 select * from memberinfo;
 select * from memberinfo where userid="1@1";
 drop table memberinfo;
+
