@@ -23,7 +23,8 @@ drop SEQUENCE dateuser_seq;
 desc dateuser;
 select * from dateuser;
 drop table dateuser;
-
+drop table movie;
+select dateuser_seq.currval from dateuser;
 
 -- 더미데이터
 insert into dateuser (u_num, u_id, u_pw, u_name, u_bday, u_regdate, u_gender) 
@@ -37,3 +38,10 @@ values(DATEUSER_SEQ.nextval, 'user3', '333', '유저3', '19/11/13', default, 'M'
 
 insert into dateuser (u_num, u_id, u_pw, u_name, u_bday, u_regdate, u_gender) 
 values(DATEUSER_SEQ.nextval, 'user4', '444', '유저4', '19/11/14', default, 'F');
+
+
+
+
+select * from dateuser join movie using(u_num);
+select * from dateuser;
+select * from movie;
