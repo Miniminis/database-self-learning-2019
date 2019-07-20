@@ -13,8 +13,7 @@ CREATE TABLE dateuser (
 );
 
 create SEQUENCE dateuser_seq 
-start with 1 
-increment by 1;
+minvalue 0;
 
 select dateuser_seq.currval from dateuser;
 

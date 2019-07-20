@@ -6,7 +6,7 @@ CREATE TABLE movie (
 	m_content LONG NOT NULL, /* 내용 */
 	m_writedate datetime default current_timestamp NOT NULL, /* 작성일시 default sysdate */
 	m_like int DEFAULT 0 NOT NULL, /* 추천 defualt 0 */
-	m_path VARCHAR(255) default 'image/defaultImg.jpg' NOT NULL, /* 파일경로 default */
+	m_path VARCHAR(255) default '../images/noImg.png' NOT NULL, /* 파일경로 default "../images/"+ saveFileName */  
 	m_hits int DEFAULT 0 NOT NULL, /* 조회수 default 0*/
 	m_star int DEFAULT 10 NOT NULL, /* 별점 default 10 */
     CONSTRAINT movie_m_num_pk PRIMARY KEY(m_num),
@@ -15,11 +15,6 @@ CREATE TABLE movie (
     CONSTRAINT movie_m_star_ck check (m_star BETWEEN 1 AND 10)
 );
 
-create sequence movie_seq
-start with 1 
-increment by 1;
-
-drop sequence movie_seq; 
 
 desc movie;
 select * from movie;
@@ -64,8 +59,25 @@ select count(*) from movie;
 -- selectList() 
 select m_path, m_title, m_writedate, m_hits, m_like from movie order by m_num desc;
 
-
-select * from dateuser join movie using(u_num); 
-
 -- selectOne
-select m_path, m_title, u_name, m_writedate, m_like, m_hits, m_content from dateuser join movie using(u_num) where m_num=13;
+select m_path, m_title, u_name, u_pw, m_writedate, m_like, m_hits, m_content from dateuser join movie using(u_num) where m_num=13;
+
+-- delete() 
+delete from movie where m_num = 5;
+
+
+select * from movie;
+
+-- updateHit(); 
+update movie set m_hits = IFNULL(m_hits, 0) +1 where m_num=20;
+
+-- orcale 
+update movie set m_hits = NVL(m_hits, 0) + 1 where m_num=20;
+
+-- editArticle() 
+update movie set 
+	m_title = 'm_title',
+    m_path = '../images/noImg.png', 
+    m_star = 5, 
+    m_content = '콘텐츠으으으'
+where m_num = 21;

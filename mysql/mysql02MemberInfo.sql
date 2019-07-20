@@ -8,7 +8,7 @@ create table memberinfo (
     username varchar(20) not null,
     userphoto varchar(30), 
     regdate datetime default CURRENT_TIMESTAMP,
-    guestbook_message PRIMARY KEY (idx)
+    constraint memberinfo_idx_pk PRIMARY KEY (idx)
 );
 
 -- 테이블 데이터 확인 
