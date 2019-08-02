@@ -6,7 +6,7 @@ CREATE TABLE GUESTBOOK_MESSAGE (
     PASSWORD VARCHAR(20) NOT NULL,
     MESSAGE text NOT NULL
 );
-
+select message from guestbook_message where message_id=1;
 desc guestbook_message;
 
 drop table guestbook_message;
